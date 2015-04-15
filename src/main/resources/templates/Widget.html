@@ -1,0 +1,13 @@
+<head>
+    <meta charset="utf-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:attr="href='https://az708254.vo.msecnd.net/content/' + ${widgetmodel.version} + '/directid.css'" />
+</head>
+
+<body>
+
+    <h1>Well Done you have successfully set up the API widget</h1>
+    <div id="did" th:attr="data-token=${widgetmodel.apiToken}"></div>
+    <script th:attr="src='https://az708254.vo.msecnd.net/content/' + ${widgetmodel.version} + '/directid.js'" />
+</body>

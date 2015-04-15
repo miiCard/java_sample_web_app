@@ -1,0 +1,40 @@
+
+<hgroup class="title">
+    <h1>Setup Connection to Direct ID</h1>
+</hgroup>
+
+<section id="form">
+    <h2>Use a local account to log in.</h2>
+    <form action="#" th:action="@{/Connect}" th:object="${setup}" method="post">
+        <fieldset>
+            <legend>Connection Details Form</legend>
+            <ol>
+                <li>
+                	<label>Please enter the API endpoint provided from Direct ID</label>
+                    <input type="text" th:field="*{api}" />
+                </li>
+                <li>
+                    <label>Please enter the Client ID provided from Direct ID</label>
+                    <input type="text" th:field="*{clientId}" />
+                </li>
+                <li>
+                    <label>Please enter the key provided from Direct ID</label>
+                    <input type="text" th:field="*{secretKey}" />
+                </li>
+                <li>
+                    <label>Please enter the Resource ID endpoint provided from Direct ID</label>
+                    <input type="text" th:field="*{resourceId}" />
+                </li>
+                <li>
+                    <label>Please enter the Version provided from Direct ID</label>
+                    <input type="text" th:field="*{version}" />
+                </li>
+                <li>
+                    <label>Please enter the Authentication Context Path provided from Direct ID</label>
+                    <input type="text" th:field="*{authority}" />
+                </li>
+            </ol>
+            <input type="submit" value="Setup Connection" />
+        </fieldset>
+        </form>
+</section>
