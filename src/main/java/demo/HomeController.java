@@ -50,7 +50,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/Connect", method = RequestMethod.POST)
 	public ModelAndView connect(CredentialsModel form) throws MalformedURLException, InterruptedException {
-		String token = returnApiKey(new DefaultHttpClient(), form.getApi(), returnOAuthTokenFromResource(form.getClientId(), form.getSecretKey(), form.getResourceId(), form.getAuthority()));
+		String token = acquireUserSessionToken(new DefaultHttpClient(), form.getApi(), acquireOAuthAccessToken(form.getClientId(), form.getSecretKey(), form.getResourceId(), form.getAuthority()));
 		ModelAndView modelAndView = new ModelAndView("Widget");
 		modelAndView.addObject("widgetmodel", new WidgetModel(form.getVersion(), token));
 		return modelAndView;
@@ -58,16 +58,19 @@ public class HomeController {
 	
 	
 	/**
-	 * Goes and fetches the oAuth2 token from the3 oAuth2 provider and returns the oAuth access token
+	 * Obtains an OAuth access token which can then be used to make authorized calls
+	 *	to the Direct ID API.
 	 * @param clientId
 	 * @param clientSecret
 	 * @param resourceId
 	 * @param authority
-	 * @return
+	 * @return The returned value is expected to be included in the authentication header of subsequent API requests
+	 * As the returned value authenticates the application, API calls made using
+     * this value should only be made using server-side code
 	 * @throws MalformedURLException
 	 * @throws InterruptedException 
 	 */
-	public String returnOAuthTokenFromResource(String clientId, String clientSecret, String resourceId, String authority) throws MalformedURLException, InterruptedException {
+	public String acquireOAuthAccessToken(String clientId, String clientSecret, String resourceId, String authority) throws MalformedURLException, InterruptedException {
 		DefaultAuthenticationCallbackHandler callback = new DefaultAuthenticationCallbackHandler();
 		ExecutorService service = Executors.newFixedThreadPool(1);
 		AuthenticationContext context = new AuthenticationContext(authority, true, service);
@@ -96,13 +99,13 @@ public class HomeController {
 	}
 
 	/**
-	 * Uses the oAuth2 token to connect to DirectID and get a valid API key
+	 * Queries <paramref name="apiEndpoint"/> with an http request authorized with <paramref name="authenticationToken"/>.
 	 * @param client
 	 * @param api
 	 * @param acquiredToken
 	 * @return
 	 */
-	public String returnApiKey(DefaultHttpClient client, String api, String acquiredToken) {
+	public String acquireUserSessionToken(DefaultHttpClient client, String api, String acquiredToken) {
 		HttpGet request = new HttpGet(api);
 		request.setHeader("Authorization", String.format("Bearer %s", acquiredToken));
 		try {
@@ -113,7 +116,7 @@ public class HomeController {
 	}
 
 	/**
-	 * Simple method to extract the api key from the response
+	 * Simple method to extract the api key from the response  using jackson
 	 * @param stream
 	 * @return
 	 * @throws IOException
@@ -125,39 +128,5 @@ public class HomeController {
 		ObjectMapper mapper = new ObjectMapper();
 		TokenResult result = mapper.readValue(stream, TokenResult.class);
 		return result.getToken();
-	}
-
-	/**
-	 * Convert stream into a String for easy processing
-	 * @param is
-	 * @return
-	 */
-	private static String getStringFromInputStream(InputStream is) {
-
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
-
-		String line;
-		try {
-
-			br = new BufferedReader(new InputStreamReader(is));
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		return sb.toString();
-
 	}
 }
