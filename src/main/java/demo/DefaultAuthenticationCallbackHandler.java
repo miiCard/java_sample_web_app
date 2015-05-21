@@ -1,8 +1,8 @@
-package handler;
+package demo;
 
 import com.microsoft.aad.adal4j.AuthenticationResult;
 
-public class DefaultAuthenticationCallbackHandler implements AuthenticationCallbackHandler {
+public class DefaultAuthenticationCallbackHandler implements com.microsoft.aad.adal4j.AuthenticationCallback {
 
 	private String token;
 
