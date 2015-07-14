@@ -99,7 +99,7 @@ public class HomeController {
 		long startTime = System.currentTimeMillis();
 		boolean flag = false;
 		while (!flag) {
-			Thread.sleep(100);
+			Thread.sleep(100);	
 			if (callback.getToken() != null) {
 				break;
 			}
