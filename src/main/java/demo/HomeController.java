@@ -50,10 +50,21 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/Connect", method = RequestMethod.POST)
 	public ModelAndView connect(CredentialsModel form) throws MalformedURLException, InterruptedException {
+		trimFormDetails(form);
 		String token = acquireUserSessionToken(new DefaultHttpClient(), form.getApi(), acquireOAuthAccessToken(form.getClientId(), form.getSecretKey(), form.getResourceId(), form.getAuthority()));
 		ModelAndView modelAndView = new ModelAndView("Widget");
-		modelAndView.addObject("widgetmodel", new WidgetModel(form.getVersion(), token));
+		modelAndView.addObject("widgetmodel", new WidgetModel(form.getFullCDNPath(), token));
 		return modelAndView;
+	}
+	
+	
+	private void trimFormDetails(CredentialsModel form) {
+		form.setApi(form.getApi().trim());
+		form.setAuthority(form.getAuthority().trim());
+		form.setClientId(form.getClientId().trim());
+		form.setFullCDNPath(form.getFullCDNPath().trim());
+		form.setResourceId(form.getResourceId().trim());
+		form.setSecretKey(form.getSecretKey().trim());	
 	}
 	
 	

@@ -11,7 +11,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'/>
 
         <!-- DirectID Widget CSS Style -->
-        <link rel="stylesheet" th:attr="href='https://az708254.vo.msecnd.net/content/' + ${widgetmodel.version} + '/directid.css'" />  
+        <link rel="stylesheet" th:attr="href='' + ${widgetmodel.fullCDNPath} + '/directid.min.css'" />  
         
         <!-- Custom Style -->            
         <style>
@@ -94,7 +94,7 @@
         </div>        
         
         <!-- DirectID Widget JS -->
-        <script th:attr="src='https://az708254.vo.msecnd.net/content/' + ${widgetmodel.version} + '/directid.js'" />
+        <script th:attr="src='' + ${widgetmodel.fullCDNPath} + '/directid.min.js'" />
         
     </body>
 </html>

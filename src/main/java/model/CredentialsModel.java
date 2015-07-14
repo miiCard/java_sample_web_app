@@ -5,7 +5,7 @@ public class CredentialsModel {
 	private String clientId;
 	private String secretKey;
 	private String resourceId;
-	private String version;
+	private String fullCDNPath;
 	private String authority;
 
 	public String getApi() {
@@ -40,12 +40,12 @@ public class CredentialsModel {
 		this.resourceId = resourceId;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getFullCDNPath() {
+		return fullCDNPath;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setFullCDNPath(String version) {
+		this.fullCDNPath = version;
 	}
 
 	public String getAuthority() {

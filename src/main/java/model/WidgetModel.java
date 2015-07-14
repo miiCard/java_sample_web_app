@@ -2,20 +2,20 @@ package model;
 
 public class WidgetModel {
 
-	private String version;
+	private String fullCDNPath;
 	private String apiToken;
 
 	public WidgetModel(String version, String apiToken) {
-		this.version = version;
+		this.fullCDNPath = version;
 		this.apiToken = apiToken;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getFullCDNPath() {
+		return fullCDNPath;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setFullCDNPath(String version) {
+		this.fullCDNPath = version;
 	}
 
 	public String getApiToken() {
@@ -26,3 +26,4 @@ public class WidgetModel {
 		this.apiToken = apiToken;
 	}
 }
+
