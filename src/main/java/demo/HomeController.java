@@ -82,11 +82,6 @@ public class HomeController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/WebHook", method = RequestMethod.POST)
-	public ResponseEntity getUserId(@RequestParam("didref") String userId) {
-		return new ResponseEntity(HttpStatus.OK);
-	}
-
 	private void trimFormDetails(CredentialsModel form) {
 		form.setApi(form.getApi().trim());
 		form.setAuthority(form.getAuthority().trim());
