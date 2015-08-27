@@ -33,9 +33,7 @@ import com.microsoft.aad.adal4j.ClientCredential;
 @Controller
 public class HomeController {
 
-	private String summaryURL = "https://api-beta.direct.id:444/v1/individuals";
-	private String detailsURL = "https://api-beta.direct.id:444/v1/individual/";
-
+	private String individualSummaryEndpoint;
 	private String authenticationToken;
 
 	/**
@@ -59,31 +57,36 @@ public class HomeController {
 	@RequestMapping(value = "/Connect", method = RequestMethod.POST)
 	public ModelAndView connect(CredentialsModel form) throws Exception {
 		trimFormDetails(form);
-
+		individualSummaryEndpoint = form.getIndividualSummaryEndpoint();
 		authenticationToken = acquireOAuthAccessToken(form.getClientId(), form.getSecretKey(), form.getResourceId(), form.getAuthority());
-		String token = acquireUserSessionToken(new DefaultHttpClient(), form.getApi(), authenticationToken);
+		String token = acquireUserSessionToken(new DefaultHttpClient(), form.getUserSessionEndpoint(), authenticationToken);
 
 		ModelAndView modelAndView = new ModelAndView("Widget");
-		modelAndView.addObject("widgetmodel", new WidgetModel(form.getFullCDNPath(), token));
+		modelAndView.addObject("widgetmodel", new WidgetModel(form.getFullCDNPath(), token, form.getIndividualSummaryEndpoint()));
 		return modelAndView;
 	}
 
 	@RequestMapping("/IndividualsSummary")
 	public ModelAndView individualsSummary() throws Exception {
 		ModelAndView modelAndView = new ModelAndView("IndividualsSummary");
-		modelAndView.addObject("individualModel", populateIndividualsSummary(getJson(summaryURL)));
+		modelAndView.addObject("individualModel", populateIndividualsSummary(getJson(individualSummaryEndpoint)));
 		return modelAndView;
 	}
 
 	@RequestMapping("/IndividualDetails")
-	public ModelAndView individualDetails(String reference) throws Exception {
+	public ModelAndView individualDetails(String reference) throws Exception {		
 		ModelAndView modelAndView = new ModelAndView("IndividualDetails");
-		modelAndView.addObject("individualModel", populateIndividualDetails(getJson(detailsURL + reference)));
+		modelAndView.addObject("individualModel", populateIndividualDetails(getJson(removeTrailingS(individualSummaryEndpoint) + "/" + reference)));
 		return modelAndView;
+	}
+	
+	
+	private String removeTrailingS(String endpoint) {
+		return endpoint.substring(0, endpoint.length() -1);
 	}
 
 	private void trimFormDetails(CredentialsModel form) {
-		form.setApi(form.getApi().trim());
+		form.setUserSessionEndpoint(form.getUserSessionEndpoint().trim());
 		form.setAuthority(form.getAuthority().trim());
 		form.setClientId(form.getClientId().trim());
 		form.setFullCDNPath(trimSlash(form.getFullCDNPath().trim()));

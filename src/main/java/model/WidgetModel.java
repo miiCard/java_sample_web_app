@@ -4,10 +4,24 @@ public class WidgetModel {
 
 	private String fullCDNPath;
 	private String apiToken;
+	private String individualSummaryEndpoint;
 
-	public WidgetModel(String version, String apiToken) {
+	public WidgetModel() {
+		
+	}
+	
+	public WidgetModel(String version, String apiToken, String individualSummaryEndpoint) {
 		this.fullCDNPath = version;
 		this.apiToken = apiToken;
+		this.individualSummaryEndpoint = individualSummaryEndpoint;
+	}
+
+	public String getIndividualSummaryEndpoint() {
+		return individualSummaryEndpoint;
+	}
+
+	public void setIndividualSummaryEndpoint(String individualSummaryEndpoint) {
+		this.individualSummaryEndpoint = individualSummaryEndpoint;
 	}
 
 	public String getFullCDNPath() {
@@ -26,4 +40,3 @@ public class WidgetModel {
 		this.apiToken = apiToken;
 	}
 }
-

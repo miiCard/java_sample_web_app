@@ -91,10 +91,15 @@
                                 <label>Secret Key</label>
                                 <input type="text" class="form-control" th:field="*{secretKey}" />                    
                             </div>                         
-                                                        
+                                  
                             <div class="form-group">
-                                <label>API Endpoint</label>
-                                <input type="text" class="form-control" th:field="*{api}" />
+                                <label>User Session Endpoint</label>
+                                <input type="text" class="form-control" th:field="*{userSessionEndpoint}" />
+                            </div>
+                                                  
+                            <div class="form-group">
+                                <label>Individual Summary Endpoint</label>
+                                <input type="text" class="form-control" th:field="*{individualSummaryEndpoint}" />
                             </div>
                             
                             <div class="form-group">

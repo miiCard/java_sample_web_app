@@ -1,19 +1,28 @@
 package model;
 
 public class CredentialsModel {
-	private String api;
+	private String userSessionEndpoint;
+	private String individualSummaryEndpoint;
 	private String clientId;
 	private String secretKey;
 	private String resourceId;
 	private String fullCDNPath;
 	private String authority;
 
-	public String getApi() {
-		return api;
+	public String getIndividualSummaryEndpoint() {
+		return individualSummaryEndpoint;
 	}
 
-	public void setApi(String api) {
-		this.api = api;
+	public void setIndividualSummaryEndpoint(String individualSummaryEndpoint) {
+		this.individualSummaryEndpoint = individualSummaryEndpoint;
+	}
+
+	public String getUserSessionEndpoint() {
+		return userSessionEndpoint;
+	}
+
+	public void setUserSessionEndpoint(String api) {
+		this.userSessionEndpoint = api;
 	}
 
 	public String getClientId() {
